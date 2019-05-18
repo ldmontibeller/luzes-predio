@@ -104,30 +104,33 @@ void setBrightness()
       inData = "";
       break;
     }
+    else {
     
-    String ledNumber = inData.substring(3, 5);  
-    int _ledNumber = ledNumber.toInt();
-    
-    if (_ledNumber == 0) {
-      Serial.println("Erro: número do led retornou zero.");
-      Serial.println(ledNumber);
+      String ledNumber = inData.substring(3, 5);  
+      int _ledNumber = ledNumber.toInt();
+      
+      if (_ledNumber == 0) {
+        Serial.println("Erro: número do led retornou zero.");
+        Serial.println(ledNumber);
+        inData = "";
+        break;
+      }
+      
+      String pwmValue = inData.substring(6, 9); 
+      int _pwmValue = pwmValue.toInt();
+      
+      if (_pwmValue > 255) 
+      {
+        Serial.print("Erro: PWM maior que 255.");
+        Serial.println(pwmValue);
+        inData = "";
+        break;
+      }
+      
+      analogWrite(_ledNumber, _pwmValue);
       inData = "";
       break;
     }
-    
-    String pwmValue = inData.substring(6, 9); 
-    int _pwmValue = pwmValue.toInt();
-    
-    if (_pwmValue > 255) 
-    {
-      Serial.print("Erro: PWM maior que 255.");
-      Serial.println(pwmValue);
-      inData = "";
-      break;
-    }
-    
-    analogWrite(_ledNumber, _pwmValue);
-    break;
   }
 }
 
